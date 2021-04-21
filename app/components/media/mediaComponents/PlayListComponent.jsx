@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react'
+import Song from './Song'
+
+import { MusicPlayListContext } from '../context/MusicPlayListContext'
+
 const PlayList = () => {
-    const [handlePlayList, sethandlePlayList] = useState()
+  const { music } = useContext(MusicPlayListContext)
 
-    useEffect(() => {
-        console.log(1)
-        console.log('use effect')
-
-    }, [])
-    return (<h1>music playlist</h1>);
+  return (
+    <div className="playlist">
+      <button>shuffle</button>
+      {music && music.map((music) => <Song music={music} key={music.id} />)}
+    </div>
+  )
 }
 
-export default PlayList;
+export default PlayList
