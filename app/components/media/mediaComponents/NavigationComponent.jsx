@@ -1,7 +1,5 @@
 import React, { useContext } from 'react'
-
 import { MusicPlayListContext } from '../context/MusicPlayListContext'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBackward,
@@ -10,7 +8,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const Navigation = ({ currentTrack }) => {
-  const { nextSong, prevSong } = useContext(MusicPlayListContext)
+  const { nextSong, prevSong, playButton, setPlayButton } = useContext(
+    MusicPlayListContext
+  )
+
+  const togglePlay = () => {
+    setPlayButton(!playButton)
+  }
+
   return (
     <div className="navigation">
       <button
@@ -20,7 +25,11 @@ const Navigation = ({ currentTrack }) => {
       >
         <FontAwesomeIcon icon={faBackward} />
       </button>
-      <button id="play" className="action-btn action-btn-big">
+      <button
+        onClick={togglePlay}
+        id="play"
+        className="action-btn action-btn-big"
+      >
         <FontAwesomeIcon icon={faPlay} />
       </button>
       <button
