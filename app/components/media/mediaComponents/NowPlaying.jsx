@@ -23,7 +23,7 @@ const NowPlaying = () => {
           id="cove"
         />
       </div>
-      <Navigation />
+      <Navigation currentTrack={nowPlaying} />
     </div>
   )
 }
