@@ -68,7 +68,7 @@ body {
 
 .music:hover {
   box-shadow: #444 0 0 0px !important;
-  border-left: 4px solid #cecece !important;
+  border-left: 4px solid #fe8daa !important;
   cursor: pointer;
 }
 
@@ -122,7 +122,15 @@ body {
 .action-btn:focus {
   outline: 0;
 }
+.shuffle-btn {
+  border-radius: 25px;
+  background-color: #fff;
+  margin: 0;
+}
 
+.active {
+  background-color: #fe8daa;
+}
 /*-------------------------------------------*\
     Music Info Card Styles
 \*-------------------------------------------*/
@@ -147,6 +155,13 @@ body {
 
 .music-info h4 {
   margin: 0;
+}
+
+.music {
+  background: #e0e0e0;
+  border-radius: 25px;
+  padding: 0 20px;
+  opacity: 0.3;
 }
 
 /*-------------------------------------------*\
