@@ -15,14 +15,12 @@ export const MusicProvider = (props) => {
     }
 
     const handleShuffle = (isShuffle) => {
-        console.log(isShuffle)
         setShuffle(isShuffle)
     }
 
     const nextSong = (currentSong) => {
         if (shuffle) {
             const shuffleSong = music[Math.floor(Math.random() * music.length)]
-            console.log(shuffleSong.track)
             setNowPlaying(shuffleSong)
         } else {
             const index = music.findIndex((music) => music.id === currentSong.id)

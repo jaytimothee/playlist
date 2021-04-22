@@ -269,14 +269,12 @@ var MusicProvider = function MusicProvider(props) {
   };
 
   var handleShuffle = function handleShuffle(isShuffle) {
-    console.log(isShuffle);
     setShuffle(isShuffle);
   };
 
   var nextSong = function nextSong(currentSong) {
     if (shuffle) {
       var shuffleSong = music[Math.floor(Math.random() * music.length)];
-      console.log(shuffleSong.track);
       setNowPlaying(shuffleSong);
     } else {
       var index = music.findIndex(function (music) {
