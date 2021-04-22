@@ -9,10 +9,11 @@ const NowPlaying = () => {
 
   useEffect(() => {
     playButton ? audioElement.current.play() : audioElement.current.pause()
-  }, [playButton])
+  }, [playButton, nowPlaying])
 
   return (
     <div className={`music-container ${playButton ? 'play' : ''}`}>
+      {playButton ? 'true' : 'false'}
       <div className="music-info">
         <h4 id="title">{nowPlaying.track}</h4>
         <div className="progress-container">

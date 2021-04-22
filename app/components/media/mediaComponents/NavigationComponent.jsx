@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBackward,
   faForward,
-  faPlay
+  faPlay,
+  faPause
 } from '@fortawesome/free-solid-svg-icons'
 
 const Navigation = ({ currentTrack }) => {
@@ -12,8 +13,8 @@ const Navigation = ({ currentTrack }) => {
     MusicPlayListContext
   )
 
-  const togglePlay = () => {
-    setPlayButton(!playButton)
+  const togglePlay = (playState) => {
+    setPlayButton(playState)
   }
 
   return (
@@ -25,12 +26,12 @@ const Navigation = ({ currentTrack }) => {
       >
         <FontAwesomeIcon icon={faBackward} />
       </button>
-      <button
-        onClick={togglePlay}
-        id="play"
-        className="action-btn action-btn-big"
-      >
-        <FontAwesomeIcon icon={faPlay} />
+      <button id="play" className="action-btn action-btn-big">
+        {playButton ? (
+          <FontAwesomeIcon onClick={() => togglePlay(false)} icon={faPause} />
+        ) : (
+          <FontAwesomeIcon onClick={() => togglePlay(true)} icon={faPlay} />
+        )}
       </button>
       <button
         onClick={() => nextSong(currentTrack)}

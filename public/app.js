@@ -260,6 +260,7 @@ var MusicProvider = function MusicProvider(props) {
 
   var handlePlayMusic = function handlePlayMusic(song) {
     setNowPlaying(song);
+    setPlayButton(true);
   };
 
   var nextSong = function nextSong(currentSong) {
@@ -361,8 +362,8 @@ var Navigation = function Navigation(_ref) {
       playButton = _useContext.playButton,
       setPlayButton = _useContext.setPlayButton;
 
-  var togglePlay = function togglePlay() {
-    setPlayButton(!playButton);
+  var togglePlay = function togglePlay(playState) {
+    setPlayButton(playState);
   };
 
   return /*#__PURE__*/_react["default"].createElement("div", {
@@ -376,10 +377,17 @@ var Navigation = function Navigation(_ref) {
   }, /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
     icon: _freeSolidSvgIcons.faBackward
   })), /*#__PURE__*/_react["default"].createElement("button", {
-    onClick: togglePlay,
     id: "play",
     className: "action-btn action-btn-big"
-  }, /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+  }, playButton ? /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+    onClick: function onClick() {
+      return togglePlay(false);
+    },
+    icon: _freeSolidSvgIcons.faPause
+  }) : /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+    onClick: function onClick() {
+      return togglePlay(true);
+    },
     icon: _freeSolidSvgIcons.faPlay
   })), /*#__PURE__*/_react["default"].createElement("button", {
     onClick: function onClick() {
@@ -426,10 +434,10 @@ var NowPlaying = function NowPlaying() {
   var audioElement = (0, _react.useRef)(null);
   (0, _react.useEffect)(function () {
     playButton ? audioElement.current.play() : audioElement.current.pause();
-  }, [playButton]);
+  }, [playButton, nowPlaying]);
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "music-container ".concat(playButton ? 'play' : '')
-  }, /*#__PURE__*/_react["default"].createElement("div", {
+  }, playButton ? 'true' : 'false', /*#__PURE__*/_react["default"].createElement("div", {
     className: "music-info"
   }, /*#__PURE__*/_react["default"].createElement("h4", {
     id: "title"
