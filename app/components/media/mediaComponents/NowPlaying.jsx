@@ -3,9 +3,9 @@ import Navigation from './NavigationComponent'
 import { MusicPlayListContext } from '../context/MusicPlayListContext'
 
 const NowPlaying = () => {
-  const { nowPlaying, playButton } = useContext(MusicPlayListContext)
+  const { nowPlaying, playButton } = useContext(MusicPlayListContext) //dependencies from music player context
 
-  const audioElement = useRef(null)
+  const audioElement = useRef(null) //audio element reference
 
   useEffect(() => {
     playButton ? audioElement.current.play() : audioElement.current.pause()

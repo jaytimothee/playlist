@@ -15,12 +15,12 @@ You can consult the GIF above for an overview of the functionality required for 
 
 ### Functionality
 
-1. Play songs from a playlist.
-2. Display the currently playing song.
-3. Pause and resume the currently playing song.
-4. Go back to the previous song.
-5. Skip to the next song in the playlist.
-6. Shuffle the songs included in the playlist.
+1. Play songs from a playlist. ✔️
+2. Display the currently playing song. ✔️
+3. Pause and resume the currently playing song. ✔️
+4. Go back to the previous song. ✔️
+5. Skip to the next song in the playlist. ✔️
+6. Shuffle the songs included in the playlist. ✔️
 
 Here are a few specifics about some less obvious parts of this application:
 
