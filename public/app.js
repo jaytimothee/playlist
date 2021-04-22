@@ -262,44 +262,83 @@ var MusicProvider = function MusicProvider(props) {
       _useState8 = _slicedToArray(_useState7, 2),
       nowPlaying = _useState8[0],
       setNowPlaying = _useState8[1];
+  /**
+   * shuffle
+   * @returns random song from playlist
+   */
+
+
+  var shufflePlaylist = function shufflePlaylist() {
+    return shuffleSong = music[Math.floor(Math.random() * music.length)];
+  };
+  /**
+   * side effect- set shuffle boolean value
+   * @param {boolean} isShuffle shuffle true or false value
+   */
+
+
+  var handleShuffle = function handleShuffle(isShuffle) {
+    setShuffle(isShuffle);
+  };
+  /**
+   * side effect - set now playing and play button to true
+   * @param {object} song current song to be played
+   */
+
 
   var handlePlayMusic = function handlePlayMusic(song) {
     setNowPlaying(song);
     setPlayButton(true);
   };
+  /**
+   * look up the index of current song in playlist
+   * @param {object} currentSong current song that is playing
+   * @returns {number} the index of the current song
+   */
 
-  var handleShuffle = function handleShuffle(isShuffle) {
-    setShuffle(isShuffle);
-  };
 
-  var nextSong = function nextSong(currentSong) {
-    if (shuffle) {
-      var shuffleSong = music[Math.floor(Math.random() * music.length)];
-      setNowPlaying(shuffleSong);
-    } else {
-      var index = music.findIndex(function (music) {
-        return music.id === currentSong.id;
-      });
-      setNowPlaying(music[nextTrackIndex(index)]);
-    }
-  };
-
-  var prevSong = function prevSong(currentSong) {
-    var index = music.findIndex(function (music) {
+  var songIndexLookUp = function songIndexLookUp(currentSong) {
+    return music.findIndex(function (music) {
       return music.id === currentSong.id;
     });
-    setNowPlaying(music[prevTrackIndex(index)]);
+  }; // navagaition controlls
+
+
+  var previousSong = function previousSong(currentSong) {
+    setNowPlaying(music[prevTrackIndex(songIndexLookUp(currentSong))]);
   };
+  /**
+   *
+   * @param {number} index current track index
+   * @returns {number} index of previous track
+   */
+
 
   var prevTrackIndex = function prevTrackIndex(index) {
-    if (index === 0) return music.length - 1;
+    if (index === 0) return music.length - 1; //loop playlist if track is at begining
+
     return index - 1;
+  };
+  /**
+   * takes in the current song and looks up its index in the playlist
+   * side effect - set now playing base on shuffle boolean
+   *
+   * @param {object} currentSong
+   */
+
+
+  var nextSong = function nextSong(currentSong) {
+    if (shuffle) return setNowPlaying(shufflePlaylist()); // exit early if shuffle is true
+
+    setNowPlaying(music[nextTrackIndex(songIndexLookUp(currentSong))]);
   };
 
   var nextTrackIndex = function nextTrackIndex(index) {
-    if (index === music.length - 1) return 0;
+    if (index === music.length - 1) return 0; // start playlist over if last track
+
     return index + 1;
-  };
+  }; //[END]
+
 
   return /*#__PURE__*/_react["default"].createElement(MusicPlayListContext.Provider, {
     value: {
@@ -310,7 +349,7 @@ var MusicProvider = function MusicProvider(props) {
       handlePlayMusic: handlePlayMusic,
       handleShuffle: handleShuffle,
       nextSong: nextSong,
-      prevSong: prevSong,
+      previousSong: previousSong,
       setPlayButton: setPlayButton
     }
   }, props.children);
@@ -372,11 +411,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var Navigation = function Navigation(_ref) {
   var currentTrack = _ref.currentTrack;
 
+  //destructure dependencies from media playlist context
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
       nextSong = _useContext.nextSong,
-      prevSong = _useContext.prevSong,
+      previousSong = _useContext.previousSong,
       playButton = _useContext.playButton,
       setPlayButton = _useContext.setPlayButton;
+  /**
+   * side effect - change play button boolean value
+   * @param {boolean} playState boolean value for play or pause
+   */
+
 
   var togglePlay = function togglePlay(playState) {
     setPlayButton(playState);
@@ -386,7 +431,7 @@ var Navigation = function Navigation(_ref) {
     className: "navigation"
   }, /*#__PURE__*/_react["default"].createElement("button", {
     onClick: function onClick() {
-      return prevSong(currentTrack);
+      return previousSong(currentTrack);
     },
     id: "prev",
     className: "action-btn"
@@ -445,9 +490,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var NowPlaying = function NowPlaying() {
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
       nowPlaying = _useContext.nowPlaying,
-      playButton = _useContext.playButton;
+      playButton = _useContext.playButton; //dependencies from music player context
 
-  var audioElement = (0, _react.useRef)(null);
+
+  var audioElement = (0, _react.useRef)(null); //audio element reference
+
   (0, _react.useEffect)(function () {
     playButton ? audioElement.current.play() : audioElement.current.pause();
   }, [playButton, nowPlaying]);
@@ -510,10 +557,11 @@ var PlayList = function PlayList() {
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
       music = _useContext.music,
       shuffle = _useContext.shuffle,
-      handleShuffle = _useContext.handleShuffle;
+      handleShuffle = _useContext.handleShuffle; //dependencies from music player context
+
 
   var handleShuffleClick = function handleShuffleClick() {
-    handleShuffle(!shuffle);
+    handleShuffle(!shuffle); // toggle shuffle state
   };
 
   return /*#__PURE__*/_react["default"].createElement("div", {

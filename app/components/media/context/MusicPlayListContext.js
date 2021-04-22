@@ -40,7 +40,7 @@ export const MusicProvider = (props) => {
      * @returns {number} the index of the current song
      */
     const songIndexLookUp = (currentSong) => {
-        return (index = music.findIndex((music) => music.id === currentSong.id))
+        return (music.findIndex((music) => music.id === currentSong.id))
     }
 
     // navagaition controlls
