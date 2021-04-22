@@ -13,7 +13,6 @@ const NowPlaying = () => {
 
   return (
     <div className={`music-container ${playButton ? 'play' : ''}`}>
-      {playButton ? 'true' : 'false'}
       <div className="music-info">
         <h4 id="title">{nowPlaying.track}</h4>
         <div className="progress-container">

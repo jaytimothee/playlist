@@ -5,6 +5,7 @@ export const MusicPlayListContext = createContext()
 
 export const MusicProvider = (props) => {
     const [music] = useState(musicList)
+    const [shuffle, setShuffle] = useState(false)
     const [playButton, setPlayButton] = useState(false)
     const [nowPlaying, setNowPlaying] = useState(music[0])
 
@@ -13,9 +14,21 @@ export const MusicProvider = (props) => {
         setPlayButton(true)
     }
 
+    const handleShuffle = (isShuffle) => {
+        console.log(isShuffle)
+        setShuffle(isShuffle)
+    }
+
     const nextSong = (currentSong) => {
-        const index = music.findIndex((music) => music.id === currentSong.id)
-        setNowPlaying(music[nextTrackIndex(index)])
+        if (shuffle) {
+            const shuffleSong = music[Math.floor(Math.random() * music.length)]
+            console.log(shuffleSong.track)
+            setNowPlaying(shuffleSong)
+        } else {
+            const index = music.findIndex((music) => music.id === currentSong.id)
+            setNowPlaying(music[nextTrackIndex(index)])
+        }
+
     }
 
     const prevSong = (currentSong) => {
@@ -34,7 +47,17 @@ export const MusicProvider = (props) => {
     }
     return (
         <MusicPlayListContext.Provider
-            value={{ music, nowPlaying, handlePlayMusic, nextSong, prevSong, playButton, setPlayButton }}
+            value={{
+                music,
+                nowPlaying,
+                playButton,
+                shuffle,
+                handlePlayMusic,
+                handleShuffle,
+                nextSong,
+                prevSong,
+                setPlayButton
+            }}
         >
             {props.children}
         </MusicPlayListContext.Provider>

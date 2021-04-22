@@ -250,24 +250,40 @@ var MusicProvider = function MusicProvider(props) {
 
   var _useState3 = (0, _react.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      playButton = _useState4[0],
-      setPlayButton = _useState4[1];
+      shuffle = _useState4[0],
+      setShuffle = _useState4[1];
 
-  var _useState5 = (0, _react.useState)(music[0]),
+  var _useState5 = (0, _react.useState)(false),
       _useState6 = _slicedToArray(_useState5, 2),
-      nowPlaying = _useState6[0],
-      setNowPlaying = _useState6[1];
+      playButton = _useState6[0],
+      setPlayButton = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(music[0]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      nowPlaying = _useState8[0],
+      setNowPlaying = _useState8[1];
 
   var handlePlayMusic = function handlePlayMusic(song) {
     setNowPlaying(song);
     setPlayButton(true);
   };
 
+  var handleShuffle = function handleShuffle(isShuffle) {
+    console.log(isShuffle);
+    setShuffle(isShuffle);
+  };
+
   var nextSong = function nextSong(currentSong) {
-    var index = music.findIndex(function (music) {
-      return music.id === currentSong.id;
-    });
-    setNowPlaying(music[nextTrackIndex(index)]);
+    if (shuffle) {
+      var shuffleSong = music[Math.floor(Math.random() * music.length)];
+      console.log(shuffleSong.track);
+      setNowPlaying(shuffleSong);
+    } else {
+      var index = music.findIndex(function (music) {
+        return music.id === currentSong.id;
+      });
+      setNowPlaying(music[nextTrackIndex(index)]);
+    }
   };
 
   var prevSong = function prevSong(currentSong) {
@@ -291,10 +307,12 @@ var MusicProvider = function MusicProvider(props) {
     value: {
       music: music,
       nowPlaying: nowPlaying,
+      playButton: playButton,
+      shuffle: shuffle,
       handlePlayMusic: handlePlayMusic,
+      handleShuffle: handleShuffle,
       nextSong: nextSong,
       prevSong: prevSong,
-      playButton: playButton,
       setPlayButton: setPlayButton
     }
   }, props.children);
@@ -437,7 +455,7 @@ var NowPlaying = function NowPlaying() {
   }, [playButton, nowPlaying]);
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "music-container ".concat(playButton ? 'play' : '')
-  }, playButton ? 'true' : 'false', /*#__PURE__*/_react["default"].createElement("div", {
+  }, /*#__PURE__*/_react["default"].createElement("div", {
     className: "music-info"
   }, /*#__PURE__*/_react["default"].createElement("h4", {
     id: "title"
@@ -480,6 +498,10 @@ var _Song = _interopRequireDefault(require("./Song"));
 
 var _MusicPlayListContext = require("../context/MusicPlayListContext");
 
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -488,11 +510,23 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var PlayList = function PlayList() {
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
-      music = _useContext.music;
+      music = _useContext.music,
+      shuffle = _useContext.shuffle,
+      handleShuffle = _useContext.handleShuffle;
+
+  var handleShuffleClick = function handleShuffleClick() {
+    handleShuffle(!shuffle);
+  };
 
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "playlist"
-  }, /*#__PURE__*/_react["default"].createElement("button", null, "shuffle"), music && music.map(function (music) {
+  }, /*#__PURE__*/_react["default"].createElement("button", {
+    onClick: function onClick() {
+      return handleShuffleClick();
+    }
+  }, /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+    icon: _freeSolidSvgIcons.faRandom
+  })), music && music.map(function (music) {
     return /*#__PURE__*/_react["default"].createElement(_Song["default"], {
       music: music,
       key: music.id
