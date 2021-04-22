@@ -9,10 +9,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const Navigation = ({ currentTrack }) => {
-  const { nextSong, prevSong, playButton, setPlayButton } = useContext(
+  //destructure dependencies from media playlist context
+  const { nextSong, previousSong, playButton, setPlayButton } = useContext(
     MusicPlayListContext
   )
 
+  /**
+   * side effect - change play button boolean value
+   * @param {boolean} playState boolean value for play or pause
+   */
   const togglePlay = (playState) => {
     setPlayButton(playState)
   }
@@ -20,7 +25,7 @@ const Navigation = ({ currentTrack }) => {
   return (
     <div className="navigation">
       <button
-        onClick={() => prevSong(currentTrack)}
+        onClick={() => previousSong(currentTrack)}
         id="prev"
         className="action-btn"
       >

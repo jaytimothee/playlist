@@ -6,9 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRandom } from '@fortawesome/free-solid-svg-icons'
 
 const PlayList = () => {
-  const { music, shuffle, handleShuffle } = useContext(MusicPlayListContext)
+  const { music, shuffle, handleShuffle } = useContext(MusicPlayListContext) //dependencies from music player context
+
   const handleShuffleClick = () => {
-    handleShuffle(!shuffle)
+    handleShuffle(!shuffle) // toggle shuffle state
   }
   return (
     <div className="playlist">

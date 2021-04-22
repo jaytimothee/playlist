@@ -9,40 +9,74 @@ export const MusicProvider = (props) => {
     const [playButton, setPlayButton] = useState(false)
     const [nowPlaying, setNowPlaying] = useState(music[0])
 
+    /**
+     * shuffle
+     * @returns random song from playlist
+     */
+    const shufflePlaylist = () => {
+        return (shuffleSong = music[Math.floor(Math.random() * music.length)])
+    }
+
+    /**
+     * side effect- set shuffle boolean value
+     * @param {boolean} isShuffle shuffle true or false value
+     */
+    const handleShuffle = (isShuffle) => {
+        setShuffle(isShuffle)
+    }
+
+    /**
+     * side effect - set now playing and play button to true
+     * @param {object} song current song to be played
+     */
     const handlePlayMusic = (song) => {
         setNowPlaying(song)
         setPlayButton(true)
     }
 
-    const handleShuffle = (isShuffle) => {
-        setShuffle(isShuffle)
+    /**
+     * look up the index of current song in playlist
+     * @param {object} currentSong current song that is playing
+     * @returns {number} the index of the current song
+     */
+    const songIndexLookUp = (currentSong) => {
+        return (index = music.findIndex((music) => music.id === currentSong.id))
     }
 
-    const nextSong = (currentSong) => {
-        if (shuffle) {
-            const shuffleSong = music[Math.floor(Math.random() * music.length)]
-            setNowPlaying(shuffleSong)
-        } else {
-            const index = music.findIndex((music) => music.id === currentSong.id)
-            setNowPlaying(music[nextTrackIndex(index)])
-        }
+    // navagaition controlls
 
+    const previousSong = (currentSong) => {
+        setNowPlaying(music[prevTrackIndex(songIndexLookUp(currentSong))])
     }
-
-    const prevSong = (currentSong) => {
-        const index = music.findIndex((music) => music.id === currentSong.id)
-        setNowPlaying(music[prevTrackIndex(index)])
-    }
-
+    /**
+     *
+     * @param {number} index current track index
+     * @returns {number} index of previous track
+     */
     const prevTrackIndex = (index) => {
-        if (index === 0) return music.length - 1
+        if (index === 0) return music.length - 1 //loop playlist if track is at begining
         return index - 1
     }
 
+    /**
+     * takes in the current song and looks up its index in the playlist
+     * side effect - set now playing base on shuffle boolean
+     *
+     * @param {object} currentSong
+     */
+    const nextSong = (currentSong) => {
+        if (shuffle) return setNowPlaying(shufflePlaylist()) // exit early if shuffle is true
+
+        setNowPlaying(music[nextTrackIndex(songIndexLookUp(currentSong))])
+    }
+
     const nextTrackIndex = (index) => {
-        if (index === music.length - 1) return 0
+        if (index === music.length - 1) return 0 // start playlist over if last track
         return index + 1
     }
+
+    //[END]
+
     return (
         <MusicPlayListContext.Provider
             value={{
@@ -53,7 +87,7 @@ export const MusicProvider = (props) => {
                 handlePlayMusic,
                 handleShuffle,
                 nextSong,
-                prevSong,
+                previousSong,
                 setPlayButton
             }}
         >

@@ -18,17 +18,9 @@ body {
   margin: 0;
 }
 
-.playlist {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 15px 15px 0 0;
-  padding: 20px;
-}
-.music:hover {
-  box-shadow: #444 0 0 0px !important;
-  border-left: 4px solid #cecece !important;
-  cursor: pointer;
-}
-
+/*-------------------------------------------*\
+  Now Playing styles
+\*-------------------------------------------*/
 .music-container {
   background-color: #fff;
   border-radius: 15px;
@@ -74,6 +66,24 @@ body {
   animation-play-state: running;
 }
 
+.music:hover {
+  box-shadow: #444 0 0 0px !important;
+  border-left: 4px solid #cecece !important;
+  cursor: pointer;
+}
+
+/*-------------------------------------------*\
+    playlist styles
+\*-------------------------------------------*/
+.playlist {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px 15px 0 0;
+  padding: 20px;
+}
+
+/*-------------------------------------------*\
+    Album Cover Animation
+\*-------------------------------------------*/
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -84,6 +94,9 @@ body {
   }
 }
 
+/*-------------------------------------------*\
+    Navigation Styles
+\*-------------------------------------------*/
 .navigation {
   display: flex;
   align-items: center;
@@ -110,6 +123,9 @@ body {
   outline: 0;
 }
 
+/*-------------------------------------------*\
+    Music Info Card Styles
+\*-------------------------------------------*/
 .music-info {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 15px 15px 0 0;
@@ -133,6 +149,9 @@ body {
   margin: 0;
 }
 
+/*-------------------------------------------*\
+   Progress bar Styles
+\*-------------------------------------------*/
 .progress-container {
   background: #fff;
   border-radius: 5px;
