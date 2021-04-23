@@ -1,6 +1,8 @@
 import React, { useState, createContext } from 'react'
 import musicList from '../../../playlist'
 
+import { songIndexLookUp } from '../../../utils/helpers'
+
 export const MusicPlayListContext = createContext()
 
 export const MusicProvider = (props) => {
@@ -34,14 +36,6 @@ export const MusicProvider = (props) => {
         setPlayButton(true)
     }
 
-    /**
-     * look up the index of current song in playlist
-     * @param {object} currentSong current song that is playing
-     * @returns {number} the index of the current song
-     */
-    const songIndexLookUp = (currentSong) => {
-        return (music.findIndex((music) => music.id === currentSong.id))
-    }
 
     // navagaition controlls
 

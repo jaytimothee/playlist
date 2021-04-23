@@ -222,6 +222,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _playlist = _interopRequireDefault(require("../../../playlist"));
 
+var _helpers = require("../../../utils/helpers");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -289,23 +291,11 @@ var MusicProvider = function MusicProvider(props) {
   var handlePlayMusic = function handlePlayMusic(song) {
     setNowPlaying(song);
     setPlayButton(true);
-  };
-  /**
-   * look up the index of current song in playlist
-   * @param {object} currentSong current song that is playing
-   * @returns {number} the index of the current song
-   */
-
-
-  var songIndexLookUp = function songIndexLookUp(currentSong) {
-    return music.findIndex(function (music) {
-      return music.id === currentSong.id;
-    });
   }; // navagaition controlls
 
 
   var previousSong = function previousSong(currentSong) {
-    setNowPlaying(music[prevTrackIndex(songIndexLookUp(currentSong))]);
+    setNowPlaying(music[prevTrackIndex((0, _helpers.songIndexLookUp)(currentSong))]);
   };
   /**
    *
@@ -330,7 +320,7 @@ var MusicProvider = function MusicProvider(props) {
   var nextSong = function nextSong(currentSong) {
     if (shuffle) return setNowPlaying(shufflePlaylist()); // exit early if shuffle is true
 
-    setNowPlaying(music[nextTrackIndex(songIndexLookUp(currentSong))]);
+    setNowPlaying(music[nextTrackIndex((0, _helpers.songIndexLookUp)(currentSong))]);
   };
 
   var nextTrackIndex = function nextTrackIndex(index) {
@@ -694,6 +684,32 @@ var _default = [{
   url: 'https://s3.us-east-2.amazonaws.com/react-challenge/tracks/terry_riley_persian_surgery_dervises_performance_1_part_1.mp3'
 }];
 exports["default"] = _default;
+});
+
+;require.register("utils/helpers.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.songIndexLookUp = void 0;
+
+var _playlist = _interopRequireDefault(require("../playlist"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+/**
+ * look up the index of current song in playlist
+ * @param {object} currentSong current song that is playing
+ * @returns {number} the index of the current song
+ */
+var songIndexLookUp = function songIndexLookUp(currentSong) {
+  return _playlist["default"].findIndex(function (music) {
+    return music.id === currentSong.id;
+  });
+};
+
+exports.songIndexLookUp = songIndexLookUp;
 });
 
 ;require.register("___globals___", function(exports, require, module) {

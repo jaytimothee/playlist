@@ -11,10 +11,4 @@ describe('<App />', () => {
     expect(app.exists()).to.equal(true)
   })
 
-  it('renders hello world text', () => {
-    const app = shallow(<App />)
-
-    expect(app.find('h1')).to.have.lengthOf(1)
-    expect(app.text()).to.equal("Hello from App.jsx")
-  })
 })
