@@ -269,7 +269,7 @@ var MusicProvider = function MusicProvider(props) {
 
 
   var shufflePlaylist = function shufflePlaylist() {
-    return shuffleSong = music[Math.floor(Math.random() * music.length)];
+    return music[Math.floor(Math.random() * music.length)];
   };
   /**
    * side effect- set shuffle boolean value
@@ -567,6 +567,7 @@ var PlayList = function PlayList() {
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "playlist"
   }, /*#__PURE__*/_react["default"].createElement("button", {
+    className: "shuffle-btn action-btn ".concat(shuffle ? 'active' : ''),
     onClick: function onClick() {
       return handleShuffleClick();
     }

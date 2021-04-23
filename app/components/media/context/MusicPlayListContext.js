@@ -14,7 +14,7 @@ export const MusicProvider = (props) => {
      * @returns random song from playlist
      */
     const shufflePlaylist = () => {
-        return (shuffleSong = music[Math.floor(Math.random() * music.length)])
+        return (music[Math.floor(Math.random() * music.length)])
     }
 
     /**

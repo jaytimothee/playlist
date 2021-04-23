@@ -13,7 +13,10 @@ const PlayList = () => {
   }
   return (
     <div className="playlist">
-      <button onClick={() => handleShuffleClick()}>
+      <button
+        className={`shuffle-btn action-btn ${shuffle ? 'active' : ''}`}
+        onClick={() => handleShuffleClick()}
+      >
         <FontAwesomeIcon icon={faRandom}></FontAwesomeIcon>
       </button>
       {music && music.map((music) => <Song music={music} key={music.id} />)}
