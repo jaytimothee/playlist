@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { MusicPlayListContext } from '../context/MusicPlayListContext'
+import React from 'react'
+import { navigationContext } from '../context/MusicPlayListContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBackward,
@@ -10,9 +10,12 @@ import {
 
 const Navigation = ({ currentTrack }) => {
   //destructure dependencies from media playlist context
-  const { nextSong, previousSong, playButton, setPlayButton } = useContext(
-    MusicPlayListContext
-  )
+  const {
+    nextSong,
+    previousSong,
+    playButton,
+    setPlayButton
+  } = navigationContext()
 
   /**
    * side effect - change play button boolean value

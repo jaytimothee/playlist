@@ -216,6 +216,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.navigationContext = navigationContext;
 exports.MusicProvider = exports.MusicPlayListContext = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
@@ -244,6 +245,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var MusicPlayListContext = /*#__PURE__*/(0, _react.createContext)();
 exports.MusicPlayListContext = MusicPlayListContext;
+
+function navigationContext() {
+  return (0, _react.useContext)(MusicPlayListContext);
+}
 
 var MusicProvider = function MusicProvider(props) {
   var _useState = (0, _react.useState)(_playlist["default"]),
@@ -330,18 +335,19 @@ var MusicProvider = function MusicProvider(props) {
   }; //[END]
 
 
+  var values = {
+    music: music,
+    nowPlaying: nowPlaying,
+    playButton: playButton,
+    shuffle: shuffle,
+    handlePlayMusic: handlePlayMusic,
+    handleShuffle: handleShuffle,
+    nextSong: nextSong,
+    previousSong: previousSong,
+    setPlayButton: setPlayButton
+  };
   return /*#__PURE__*/_react["default"].createElement(MusicPlayListContext.Provider, {
-    value: {
-      music: music,
-      nowPlaying: nowPlaying,
-      playButton: playButton,
-      shuffle: shuffle,
-      handlePlayMusic: handlePlayMusic,
-      handleShuffle: handleShuffle,
-      nextSong: nextSong,
-      previousSong: previousSong,
-      setPlayButton: setPlayButton
-    }
+    value: values
   }, props.children);
 };
 
@@ -379,14 +385,12 @@ exports["default"] = _default;
 ;require.register("components/media/mediaComponents/NavigationComponent.jsx", function(exports, require, module) {
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _MusicPlayListContext = require("../context/MusicPlayListContext");
 
@@ -394,19 +398,17 @@ var _reactFontawesome = require("@fortawesome/react-fontawesome");
 
 var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Navigation = function Navigation(_ref) {
   var currentTrack = _ref.currentTrack;
 
   //destructure dependencies from media playlist context
-  var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
-      nextSong = _useContext.nextSong,
-      previousSong = _useContext.previousSong,
-      playButton = _useContext.playButton,
-      setPlayButton = _useContext.setPlayButton;
+  var _navigationContext = (0, _MusicPlayListContext.navigationContext)(),
+      nextSong = _navigationContext.nextSong,
+      previousSong = _navigationContext.previousSong,
+      playButton = _navigationContext.playButton,
+      setPlayButton = _navigationContext.setPlayButton;
   /**
    * side effect - change play button boolean value
    * @param {boolean} playState boolean value for play or pause

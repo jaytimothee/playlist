@@ -1,9 +1,11 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useContext } from 'react'
 import musicList from '../../../playlist'
 
 import { songIndexLookUp } from '../../../utils/helpers'
 
 export const MusicPlayListContext = createContext()
+export function navigationContext() { return useContext(MusicPlayListContext) }
+
 
 export const MusicProvider = (props) => {
     const [music] = useState(musicList)
@@ -11,12 +13,14 @@ export const MusicProvider = (props) => {
     const [playButton, setPlayButton] = useState(false)
     const [nowPlaying, setNowPlaying] = useState(music[0])
 
+
+
     /**
      * shuffle
      * @returns random song from playlist
      */
     const shufflePlaylist = () => {
-        return (music[Math.floor(Math.random() * music.length)])
+        return music[Math.floor(Math.random() * music.length)]
     }
 
     /**
@@ -35,7 +39,6 @@ export const MusicProvider = (props) => {
         setNowPlaying(song)
         setPlayButton(true)
     }
-
 
     // navagaition controlls
 
@@ -71,20 +74,21 @@ export const MusicProvider = (props) => {
 
     //[END]
 
+
+    const values = {
+        music,
+        nowPlaying,
+        playButton,
+        shuffle,
+        handlePlayMusic,
+        handleShuffle,
+        nextSong,
+        previousSong,
+        setPlayButton
+    }
+
     return (
-        <MusicPlayListContext.Provider
-            value={{
-                music,
-                nowPlaying,
-                playButton,
-                shuffle,
-                handlePlayMusic,
-                handleShuffle,
-                nextSong,
-                previousSong,
-                setPlayButton
-            }}
-        >
+        <MusicPlayListContext.Provider value={values}>
             {props.children}
         </MusicPlayListContext.Provider>
     )
