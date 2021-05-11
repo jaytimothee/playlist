@@ -2,8 +2,17 @@ import React, { useContext, useRef, useEffect } from 'react'
 import Navigation from './NavigationComponent'
 import { MusicPlayListContext } from '../context/MusicPlayListContext'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+
 const NowPlaying = () => {
-  const { nowPlaying, playButton, nextSong } = useContext(MusicPlayListContext) //dependencies from music player context
+  const {
+    nowPlaying,
+    playButton,
+    nextSong,
+    favorites,
+    handleAddToFavorites
+  } = useContext(MusicPlayListContext) //dependencies from music player context
 
   const audioElement = useRef(null) //audio element reference
   const progressBar = useRef(null)
@@ -31,10 +40,23 @@ const NowPlaying = () => {
     nextSong(nowPlaying)
   }
 
+  function favoritesList() {
+    return favorites.find((track) => {
+      return track.id === nowPlaying.id
+    })
+  }
+
   return (
     <div className={`music-container ${playButton ? 'play' : ''}`}>
       <div className="music-info">
-        <h4 id="title">{nowPlaying.track}</h4>
+        <div className="title-container">
+          <h4 id="title">{nowPlaying.track}</h4>
+          <FontAwesomeIcon
+            onClick={() => handleAddToFavorites(nowPlaying)}
+            className={`${favoritesList() ? 'favorites' : 'heart'}`}
+            icon={faHeart}
+          />
+        </div>
         <div
           onClick={handleSetProgress}
           ref={setProgress}

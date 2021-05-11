@@ -131,6 +131,9 @@ body {
 .active {
   background-color: #fe8daa;
 }
+.favorites {
+  color: #fe8daa;
+}
 /*-------------------------------------------*\
     Music Info Card Styles
 \*-------------------------------------------*/
@@ -146,6 +149,16 @@ body {
   transform: translateY(0%);
   transition: transform 0.3s ease-in, opacity 0.3s ease-in;
   z-index: 0;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heart {
+  color: #e0e0e0;
+  cursor: pointer;
 }
 
 .music-container.play .music-info {
