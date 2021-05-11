@@ -310,7 +310,6 @@ var MusicProvider = function MusicProvider(props) {
     setfavorites(function (favoritesPlayList) {
       return [].concat(_toConsumableArray(favoritesPlayList), [song]);
     });
-    console.log(favorites);
   }; // navagaition controlls
 
 

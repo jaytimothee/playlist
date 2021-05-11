@@ -39,7 +39,6 @@ export const MusicProvider = (props) => {
 
     const handleAddToFavorites = (song) => {
         setfavorites(favoritesPlayList => [...favoritesPlayList, song])
-        console.log(favorites)
     }
 
 
