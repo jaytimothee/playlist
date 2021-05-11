@@ -485,9 +485,27 @@ var NowPlaying = function NowPlaying() {
 
   var audioElement = (0, _react.useRef)(null); //audio element reference
 
+  var progressBar = (0, _react.useRef)(null);
+  var setProgress = (0, _react.useRef)(null);
   (0, _react.useEffect)(function () {
     playButton ? audioElement.current.play() : audioElement.current.pause();
   }, [playButton, nowPlaying]);
+
+  function handleTimeChange() {
+    var _audioElement$current = audioElement.current,
+        currentTime = _audioElement$current.currentTime,
+        duration = _audioElement$current.duration;
+    var timeChange = currentTime / duration * 100;
+    progressBar.current.style.width = "".concat(timeChange, "%");
+  }
+
+  function handleSetProgress(e) {
+    var width = setProgress.current.offsetWidth;
+    var setTime = e.nativeEvent.offsetX;
+    var duration = audioElement.current.duration;
+    audioElement.current.currentTime = setTime / width * duration;
+  }
+
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "music-container ".concat(playButton ? 'play' : '')
   }, /*#__PURE__*/_react["default"].createElement("div", {
@@ -495,10 +513,14 @@ var NowPlaying = function NowPlaying() {
   }, /*#__PURE__*/_react["default"].createElement("h4", {
     id: "title"
   }, nowPlaying.track), /*#__PURE__*/_react["default"].createElement("div", {
+    onClick: handleSetProgress,
+    ref: setProgress,
     className: "progress-container"
   }, /*#__PURE__*/_react["default"].createElement("div", {
+    ref: progressBar,
     className: "progress"
   }))), /*#__PURE__*/_react["default"].createElement("audio", {
+    onTimeUpdate: handleTimeChange,
     ref: audioElement,
     src: nowPlaying.url,
     id: "audio"
