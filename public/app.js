@@ -480,7 +480,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var NowPlaying = function NowPlaying() {
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
       nowPlaying = _useContext.nowPlaying,
-      playButton = _useContext.playButton; //dependencies from music player context
+      playButton = _useContext.playButton,
+      nextSong = _useContext.nextSong; //dependencies from music player context
 
 
   var audioElement = (0, _react.useRef)(null); //audio element reference
@@ -506,6 +507,10 @@ var NowPlaying = function NowPlaying() {
     audioElement.current.currentTime = setTime / width * duration;
   }
 
+  function handleNextSong() {
+    nextSong(nowPlaying);
+  }
+
   return /*#__PURE__*/_react["default"].createElement("div", {
     className: "music-container ".concat(playButton ? 'play' : '')
   }, /*#__PURE__*/_react["default"].createElement("div", {
@@ -521,6 +526,7 @@ var NowPlaying = function NowPlaying() {
     className: "progress"
   }))), /*#__PURE__*/_react["default"].createElement("audio", {
     onTimeUpdate: handleTimeChange,
+    onEnded: handleNextSong,
     ref: audioElement,
     src: nowPlaying.url,
     id: "audio"

@@ -3,7 +3,7 @@ import Navigation from './NavigationComponent'
 import { MusicPlayListContext } from '../context/MusicPlayListContext'
 
 const NowPlaying = () => {
-  const { nowPlaying, playButton } = useContext(MusicPlayListContext) //dependencies from music player context
+  const { nowPlaying, playButton, nextSong } = useContext(MusicPlayListContext) //dependencies from music player context
 
   const audioElement = useRef(null) //audio element reference
   const progressBar = useRef(null)
@@ -27,6 +27,10 @@ const NowPlaying = () => {
     audioElement.current.currentTime = (setTime / width) * duration
   }
 
+  function handleNextSong() {
+    nextSong(nowPlaying)
+  }
+
   return (
     <div className={`music-container ${playButton ? 'play' : ''}`}>
       <div className="music-info">
@@ -41,6 +45,7 @@ const NowPlaying = () => {
       </div>
       <audio
         onTimeUpdate={handleTimeChange}
+        onEnded={handleNextSong}
         ref={audioElement}
         src={nowPlaying.url}
         id="audio"
