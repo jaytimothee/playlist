@@ -11,7 +11,7 @@ const NowPlaying = () => {
     playButton,
     nextSong,
     favorites,
-    handleAddToFAvorites
+    handleAddToFavorites
   } = useContext(MusicPlayListContext) //dependencies from music player context
 
   const audioElement = useRef(null) //audio element reference
@@ -52,7 +52,7 @@ const NowPlaying = () => {
         <div className="title-container">
           <h4 id="title">{nowPlaying.track}</h4>
           <FontAwesomeIcon
-            onClick={() => handleAddToFAvorites(nowPlaying)}
+            onClick={() => handleAddToFavorites(nowPlaying)}
             className={`${favoritesList() ? 'favorites' : 'heart'}`}
             icon={faHeart}
           />

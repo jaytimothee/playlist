@@ -306,7 +306,7 @@ var MusicProvider = function MusicProvider(props) {
     setPlayButton(true);
   };
 
-  var handleAddToFAvorites = function handleAddToFAvorites(song) {
+  var handleAddToFavorites = function handleAddToFavorites(song) {
     setfavorites(function (favoritesPlayList) {
       return [].concat(_toConsumableArray(favoritesPlayList), [song]);
     });
@@ -357,7 +357,7 @@ var MusicProvider = function MusicProvider(props) {
       playButton: playButton,
       shuffle: shuffle,
       favorites: favorites,
-      handleAddToFAvorites: handleAddToFAvorites,
+      handleAddToFavorites: handleAddToFavorites,
       handlePlayMusic: handlePlayMusic,
       handleShuffle: handleShuffle,
       nextSong: nextSong,
@@ -509,7 +509,7 @@ var NowPlaying = function NowPlaying() {
       playButton = _useContext.playButton,
       nextSong = _useContext.nextSong,
       favorites = _useContext.favorites,
-      handleAddToFAvorites = _useContext.handleAddToFAvorites; //dependencies from music player context
+      handleAddToFavorites = _useContext.handleAddToFavorites; //dependencies from music player context
 
 
   var audioElement = (0, _react.useRef)(null); //audio element reference
@@ -555,7 +555,7 @@ var NowPlaying = function NowPlaying() {
     id: "title"
   }, nowPlaying.track), /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
     onClick: function onClick() {
-      return handleAddToFAvorites(nowPlaying);
+      return handleAddToFavorites(nowPlaying);
     },
     className: "".concat(favoritesList() ? 'favorites' : 'heart'),
     icon: _freeSolidSvgIcons.faHeart

@@ -37,7 +37,7 @@ export const MusicProvider = (props) => {
         setPlayButton(true)
     }
 
-    const handleAddToFAvorites = (song) => {
+    const handleAddToFavorites = (song) => {
         setfavorites(favoritesPlayList => [...favoritesPlayList, song])
         console.log(favorites)
     }
@@ -85,7 +85,7 @@ export const MusicProvider = (props) => {
                 playButton,
                 shuffle,
                 favorites,
-                handleAddToFAvorites,
+                handleAddToFavorites,
                 handlePlayMusic,
                 handleShuffle,
                 nextSong,
