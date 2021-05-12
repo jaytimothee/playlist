@@ -266,11 +266,6 @@ var MusicProvider = function MusicProvider(props) {
       _useState8 = _slicedToArray(_useState7, 2),
       nowPlaying = _useState8[0],
       setNowPlaying = _useState8[1];
-
-  var _useState9 = (0, _react.useState)([]),
-      _useState10 = _slicedToArray(_useState9, 2),
-      favorites = _useState10[0],
-      setfavorites = _useState10[1];
   /**
    * shuffle
    * @returns random song from playlist
@@ -298,9 +293,7 @@ var MusicProvider = function MusicProvider(props) {
   var handlePlayMusic = function handlePlayMusic(song) {
     setNowPlaying(song);
     setPlayButton(true);
-  };
-
-  var handleAddToFavorites = function handleAddToFavorites(song) {}; // navagaition controlls
+  }; // navagaition controlls
 
 
   var previousSong = function previousSong(currentSong) {
@@ -345,8 +338,6 @@ var MusicProvider = function MusicProvider(props) {
       nowPlaying: nowPlaying,
       playButton: playButton,
       shuffle: shuffle,
-      favorites: favorites,
-      handleAddToFavorites: handleAddToFavorites,
       handlePlayMusic: handlePlayMusic,
       handleShuffle: handleShuffle,
       nextSong: nextSong,

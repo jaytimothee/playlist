@@ -10,7 +10,6 @@ export const MusicProvider = (props) => {
     const [shuffle, setShuffle] = useState(false)
     const [playButton, setPlayButton] = useState(false)
     const [nowPlaying, setNowPlaying] = useState(() => music[0])
-    const [favorites, setfavorites] = useState([])
 
     /**
      * shuffle
@@ -36,12 +35,6 @@ export const MusicProvider = (props) => {
         setNowPlaying(song)
         setPlayButton(true)
     }
-
-    const handleAddToFavorites = (song) => {
-
-
-    }
-
 
     // navagaition controlls
 
@@ -84,8 +77,6 @@ export const MusicProvider = (props) => {
                 nowPlaying,
                 playButton,
                 shuffle,
-                favorites,
-                handleAddToFavorites,
                 handlePlayMusic,
                 handleShuffle,
                 nextSong,
