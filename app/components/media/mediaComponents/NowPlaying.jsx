@@ -2,17 +2,8 @@ import React, { useContext, useRef, useEffect } from 'react'
 import Navigation from './NavigationComponent'
 import { MusicPlayListContext } from '../context/MusicPlayListContext'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
-
 const NowPlaying = () => {
-  const {
-    nowPlaying,
-    playButton,
-    nextSong,
-    favorites,
-    handleAddToFavorites
-  } = useContext(MusicPlayListContext) //dependencies from music player context
+  const { nowPlaying, playButton, nextSong } = useContext(MusicPlayListContext) //dependencies from music player context
 
   const audioElement = useRef(null) //audio element reference
   const progressBar = useRef(null)
@@ -22,17 +13,26 @@ const NowPlaying = () => {
     playButton ? audioElement.current.play() : audioElement.current.pause()
   }, [playButton, nowPlaying])
 
+  //get current time in song and total duration to calculate change in %
+
   function handleTimeChange() {
     const { currentTime, duration } = audioElement.current
     const timeChange = (currentTime / duration) * 100
     progressBar.current.style.width = `${timeChange}%`
   }
 
+  //alow user to click on progress bar
   function handleSetProgress(e) {
+    //use progress bar ref to get the total element width
     const width = setProgress.current.offsetWidth
+
+    // X position click location
     const setTime = e.nativeEvent.offsetX
+
+    // music length
     const duration = audioElement.current.duration
 
+    //set time base on click position
     audioElement.current.currentTime = (setTime / width) * duration
   }
 
@@ -40,22 +40,11 @@ const NowPlaying = () => {
     nextSong(nowPlaying)
   }
 
-  function favoritesList() {
-    return favorites.find((track) => {
-      return track.id === nowPlaying.id
-    })
-  }
-
   return (
     <div className={`music-container ${playButton ? 'play' : ''}`}>
       <div className="music-info">
         <div className="title-container">
           <h4 id="title">{nowPlaying.track}</h4>
-          <FontAwesomeIcon
-            onClick={() => handleAddToFavorites(nowPlaying)}
-            className={`${favoritesList() ? 'favorites' : 'heart'}`}
-            icon={faHeart}
-          />
         </div>
         <div
           onClick={handleSetProgress}

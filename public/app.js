@@ -230,14 +230,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -268,7 +260,9 @@ var MusicProvider = function MusicProvider(props) {
       playButton = _useState6[0],
       setPlayButton = _useState6[1];
 
-  var _useState7 = (0, _react.useState)(music[0]),
+  var _useState7 = (0, _react.useState)(function () {
+    return music[0];
+  }),
       _useState8 = _slicedToArray(_useState7, 2),
       nowPlaying = _useState8[0],
       setNowPlaying = _useState8[1];
@@ -306,11 +300,7 @@ var MusicProvider = function MusicProvider(props) {
     setPlayButton(true);
   };
 
-  var handleAddToFavorites = function handleAddToFavorites(song) {
-    setfavorites(function (favoritesPlayList) {
-      return [].concat(_toConsumableArray(favoritesPlayList), [song]);
-    });
-  }; // navagaition controlls
+  var handleAddToFavorites = function handleAddToFavorites(song) {}; // navagaition controlls
 
 
   var previousSong = function previousSong(currentSong) {
@@ -492,10 +482,6 @@ var _NavigationComponent = _interopRequireDefault(require("./NavigationComponent
 
 var _MusicPlayListContext = require("../context/MusicPlayListContext");
 
-var _reactFontawesome = require("@fortawesome/react-fontawesome");
-
-var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -506,9 +492,7 @@ var NowPlaying = function NowPlaying() {
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
       nowPlaying = _useContext.nowPlaying,
       playButton = _useContext.playButton,
-      nextSong = _useContext.nextSong,
-      favorites = _useContext.favorites,
-      handleAddToFavorites = _useContext.handleAddToFavorites; //dependencies from music player context
+      nextSong = _useContext.nextSong; //dependencies from music player context
 
 
   var audioElement = (0, _react.useRef)(null); //audio element reference
@@ -517,7 +501,7 @@ var NowPlaying = function NowPlaying() {
   var setProgress = (0, _react.useRef)(null);
   (0, _react.useEffect)(function () {
     playButton ? audioElement.current.play() : audioElement.current.pause();
-  }, [playButton, nowPlaying]);
+  }, [playButton, nowPlaying]); //get current time in song and total duration to calculate change in %
 
   function handleTimeChange() {
     var _audioElement$current = audioElement.current,
@@ -525,23 +509,22 @@ var NowPlaying = function NowPlaying() {
         duration = _audioElement$current.duration;
     var timeChange = currentTime / duration * 100;
     progressBar.current.style.width = "".concat(timeChange, "%");
-  }
+  } //alow user to click on progress bar
+
 
   function handleSetProgress(e) {
-    var width = setProgress.current.offsetWidth;
-    var setTime = e.nativeEvent.offsetX;
-    var duration = audioElement.current.duration;
+    //use progress bar ref to get the total element width
+    var width = setProgress.current.offsetWidth; // X position click location
+
+    var setTime = e.nativeEvent.offsetX; // music length
+
+    var duration = audioElement.current.duration; //set time base on click position
+
     audioElement.current.currentTime = setTime / width * duration;
   }
 
   function handleNextSong() {
     nextSong(nowPlaying);
-  }
-
-  function favoritesList() {
-    return favorites.find(function (track) {
-      return track.id === nowPlaying.id;
-    });
   }
 
   return /*#__PURE__*/_react["default"].createElement("div", {
@@ -552,13 +535,7 @@ var NowPlaying = function NowPlaying() {
     className: "title-container"
   }, /*#__PURE__*/_react["default"].createElement("h4", {
     id: "title"
-  }, nowPlaying.track), /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
-    onClick: function onClick() {
-      return handleAddToFavorites(nowPlaying);
-    },
-    className: "".concat(favoritesList() ? 'favorites' : 'heart'),
-    icon: _freeSolidSvgIcons.faHeart
-  })), /*#__PURE__*/_react["default"].createElement("div", {
+  }, nowPlaying.track)), /*#__PURE__*/_react["default"].createElement("div", {
     onClick: handleSetProgress,
     ref: setProgress,
     className: "progress-container"
@@ -656,6 +633,10 @@ exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
 var _MusicPlayListContext = require("../context/MusicPlayListContext");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -668,12 +649,26 @@ var Song = function Song(_ref) {
   var _useContext = (0, _react.useContext)(_MusicPlayListContext.MusicPlayListContext),
       handlePlayMusic = _useContext.handlePlayMusic;
 
+  var favorites = music;
+
+  function addToFavorites() {
+    favorites.fav = true;
+  }
+
   return /*#__PURE__*/_react["default"].createElement("div", {
     onClick: function onClick() {
       return handlePlayMusic(music);
     },
     className: "music"
-  }, /*#__PURE__*/_react["default"].createElement("h3", null, music.artist), /*#__PURE__*/_react["default"].createElement("p", null, music.track, " - ", music.album));
+  }, /*#__PURE__*/_react["default"].createElement("h3", null, music.artist), /*#__PURE__*/_react["default"].createElement("div", {
+    className: "song-container"
+  }, /*#__PURE__*/_react["default"].createElement("p", null, music.track, " - ", music.album), /*#__PURE__*/_react["default"].createElement(_reactFontawesome.FontAwesomeIcon, {
+    onClick: function onClick() {
+      return addToFavorites(music);
+    },
+    className: "".concat(favorites.fav ? 'favorites' : 'heart'),
+    icon: _freeSolidSvgIcons.faHeart
+  })));
 };
 
 var _default = Song;

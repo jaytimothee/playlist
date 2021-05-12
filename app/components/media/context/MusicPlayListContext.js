@@ -9,7 +9,7 @@ export const MusicProvider = (props) => {
     const [music] = useState(musicList)
     const [shuffle, setShuffle] = useState(false)
     const [playButton, setPlayButton] = useState(false)
-    const [nowPlaying, setNowPlaying] = useState(music[0])
+    const [nowPlaying, setNowPlaying] = useState(() => music[0])
     const [favorites, setfavorites] = useState([])
 
     /**
@@ -38,7 +38,8 @@ export const MusicProvider = (props) => {
     }
 
     const handleAddToFavorites = (song) => {
-        setfavorites(favoritesPlayList => [...favoritesPlayList, song])
+
+
     }
 
 

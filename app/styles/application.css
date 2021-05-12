@@ -72,6 +72,11 @@ body {
   cursor: pointer;
 }
 
+.song-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 /*-------------------------------------------*\
     playlist styles
 \*-------------------------------------------*/
@@ -157,7 +162,7 @@ body {
 }
 
 .heart {
-  color: #e0e0e0;
+  color: #000;
   cursor: pointer;
 }
 
